@@ -4,7 +4,7 @@ import Landing from './pages/Landing'
 import ForgotPassword from './pages/ForgotPassword'
 import Profile from './pages/Profile'
 import SignIn from './pages/SignIn'
-import SignUp from './pages/Landing'
+import SignUp from './pages/SignUp'
 
 function App() {
   return (
