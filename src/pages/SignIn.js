@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import outlineEyeOpen from '../assets/outline-eye-open.svg'
 
 function SignIn() {
@@ -21,11 +22,30 @@ function SignIn() {
         }))
     }
 
+    const onSubmit = async (e) => {
+        e.preventDefault()
+
+        try {
+
+            const auth = getAuth()
+
+            const userCredential = await signInWithEmailAndPassword(auth, email, password)
+            //check to see if the user is valid and redirect 
+            if (userCredential.user) {
+                navigate('/')
+            }
+
+        } catch (error) {
+            console.log(error)
+        }
+
+    }
+
 
     return (
         <>
             <div>
-                <form>
+                <form onSubmit={onSubmit}>
                     <input
                         type='email'
                         placeholder='Email'
@@ -42,15 +62,19 @@ function SignIn() {
                             onChange={onChange}
                         />
 
-                        <img src={outlineEyeOpen}/>
+                        <img src={outlineEyeOpen} />
                     </div>
+
+                    <button type="submit">
+                        Submit
+                    </button>
 
                     {/* google OAuth */}
 
                     <Link to='/forgot-password'>Forgot password</Link>
                     <Link to='/sign-up'>Sign up</Link>
                 </form>
-                
+
             </div>
         </>
     )

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import {db} from '../firebase.config'
 import outlineEyeOpen from '../assets/outline-eye-open.svg'
@@ -37,6 +38,13 @@ function SignUp() {
             updateProfile(auth.currentUser, {
                 displayName: name
             })
+            //make a copy of the user data and delete the password
+            const userDataCopy = {...userData}
+            delete userDataCopy.password
+            //add timestanp property and set to timestamp function 
+            userDataCopy.timestamp = serverTimestamp()
+            // update the database, adding user to the users collection 
+            await setDoc(doc(db, 'users', user.uid), userDataCopy)
             //redirect
             navigate('/')
             
