@@ -1,8 +1,9 @@
 # Dusty Discs (Vinyl Market App) 
 
 
-## Google Firebase 
-React
+## Tech  
+Google Firestore 
+React  
 Toast
 
 
