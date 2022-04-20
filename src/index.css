@@ -35,3 +35,11 @@ code {
 .navbarListItem{
 
 }
+
+.inputActive{
+  color:darkgrey
+}
+
+.inputDisabled{
+  background-color: ghostwhite;
+}
