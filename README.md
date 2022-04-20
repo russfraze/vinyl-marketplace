@@ -2,7 +2,7 @@
 
 
 ## Tech  
-Google Firestore 
+Google Firestore   
 React  
 Toast
 
