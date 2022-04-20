@@ -9,8 +9,11 @@ Toast
 
 ## Concepts 
 
-### Google Firebase
-Auth stuff
+FIRESTORE AUTH
+Sign up new user  
+User sign in   
+Logout   
+
 
 
 ###React Router 
