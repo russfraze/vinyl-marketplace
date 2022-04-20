@@ -1,6 +1,8 @@
-import { getAuth } from 'firebase/auth'
+import { getAuth, updateProfile } from 'firebase/auth'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+import {updateDoc, doc} from 'firebase/firestore'
+import {db} from '../firebase.config'
 
 function Profile() {
     const auth = getAuth()
@@ -22,7 +24,23 @@ function Profile() {
         navigate('/')
     }
 
-    const onSubmit = () => {
+    const onSubmit = async () => {
+        try {
+            if (name !== auth.currentUser.displayName){
+                await updateProfile(auth.currentUser, {
+                    displayName: name
+                })
+
+                const userRef = doc(db, 'users', auth.currentUser.uid)
+                await updateDoc(userRef, {
+                    name
+                })
+            }
+
+
+        } catch (error) {
+            
+        }
         console.log(userData)
     }
 
