@@ -9,15 +9,15 @@ Toast
 
 ## Concepts 
 
-FIRESTORE AUTH
+FIRESTORE AUTH  
 Sign up new user  
 User sign in   
-Logout   
+Logout     
 
 
 
-###React Router 
-useNavigate
+REACT ROUTER  
+useNavigate  
 Creating a private route component 
 
 
