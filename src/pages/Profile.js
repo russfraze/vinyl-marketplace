@@ -1,6 +1,6 @@
 import { getAuth, updateProfile } from 'firebase/auth'
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import {updateDoc, doc} from 'firebase/firestore'
 import {db} from '../firebase.config'
 
@@ -81,6 +81,7 @@ function Profile() {
             </form>
 
             <button type="button" onClick={logOut}>Logout</button>
+            <Link to='/create-listing'>Create Listing</Link>
         </>
     )
 }
