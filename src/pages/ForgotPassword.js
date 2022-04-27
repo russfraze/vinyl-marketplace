@@ -23,11 +23,6 @@ function ForgotPassword() {
         }
     }
 
-    const onTry = (e) => {
-        toast.error('why dis dont work?')
-    }
-
-
     return (
 
         <div>
@@ -47,9 +42,8 @@ function ForgotPassword() {
 
             />
             <button type='submit' >Send Reset Email</button>
-
-            <button onClick={onTry}>Try</button>
         </form>
+
         <Link to='/sign-in'>
             Sign In 
         </Link>
