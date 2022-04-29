@@ -139,9 +139,26 @@ function CreateListing() {
             return
         })
 
-        console.log(imgUrls)
+        //the object thats sent to database
+        const listingData = {
+            ...formData,
+            imgUrls,
+            condition,
+            format,
+            genreStyle,
+            timestamp: serverTimestamp()
+        }
+
+        delete listingData.images
+
+        //save tot he database
+        const docRef = await addDoc(collection(db, 'listings'), listingData)
 
         setLoading(false)
+
+        toast.success('Listing saved')
+
+        //navigate to listing
     }
 
     const onMutate = (e) => {

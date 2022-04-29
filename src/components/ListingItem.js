@@ -7,12 +7,12 @@ function ListingItem({item}) {
             
                
                 <div> 
-                    <img src={item.imageUrls[0]} ></img>
+                    <img src={item.imgUrls[0]} ></img>
                     <h3>{item.artistTitle}</h3>
-                    <p>$ {item.price}</p>
+                    <p>Genre / Style: {item.genreStyle.value}</p> 
                     <p>{item.description}</p>
-                    <p>Condition Rating: {item.condition}</p>
-                    <p>Genre / Style: {item.genreStyle}</p>
+                    <p>Condition Rating: {item.condition.value}</p>
+                    <p>$ {item.price}</p>
                 </div>
 
 
