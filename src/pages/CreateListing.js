@@ -158,7 +158,7 @@ function CreateListing() {
 
         toast.success('Listing saved')
 
-        //navigate to listing
+        navigate(`/landing/${docRef.id}`)
     }
 
     const onMutate = (e) => {
