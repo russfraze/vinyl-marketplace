@@ -19,18 +19,18 @@ function Listing() {
             const docSnap = await getDoc(docRef)
 
             if( docSnap.exists()) {
-                // console.log(docSnap.data())
-                console.log(listing.artistTitle)
+                console.log(docSnap.data())
+                // console.log(listing.artistTitle)
                 setListing(docSnap.data())
                 setLoading(false)
             }
         }
 
         fetchListing()
-    },[navigate, params.itemId])
+    },[params.itemId])
 
     if (loading) {
-        <h1>Loading ...</h1>
+        return <h1>Loading ...</h1>
     }
 
     return (
@@ -45,6 +45,8 @@ function Listing() {
                 <p>{listing.genreStyle.value}</p>
                 <p>$ {listing.price}</p>
             </div>
+            <button type='button'>Add to cart</button>
+            <button type='button'>Add to wantlist</button>
         </main>
     )
 }
