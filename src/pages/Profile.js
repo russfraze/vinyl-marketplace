@@ -10,7 +10,7 @@ function Profile() {
     const [changeDetails, setChangeDetails] = useState(false)
     const [userData, setUserData] = useState({
         name: auth.currentUser.displayName,
-        email: auth.currentUser.email
+        email: auth.currentUser.email,
     })
     const {name, email} = userData
 

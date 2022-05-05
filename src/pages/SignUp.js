@@ -1,15 +1,15 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { doc, setDoc, serverTimestamp } from "firebase/firestore";
+import { doc, setDoc, addDoc, serverTimestamp, collection } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import {db} from '../firebase.config'
+import { db } from '../firebase.config'
 import outlineEyeOpen from '../assets/outline-eye-open.svg'
 
 function SignUp() {
     const [userData, setUserData] = useState({
         name: '',
         email: '',
-        password: ''
+        password: '',
     })
     // destructure these variables from the userData so they can be used
     const { name, email, password } = userData
@@ -24,30 +24,33 @@ function SignUp() {
         }))
     }
 
-    
+
     const onSubmit = async (e) => {
         e.preventDefault()
-        
+
         try {
             const auth = getAuth() //get auth value
             //register user and store in userCredential 
             const userCredential = await createUserWithEmailAndPassword(auth, email, password)
             // get the user 
-            const user = userCredential.user 
+            const user = userCredential.user
             //update display name
             updateProfile(auth.currentUser, {
                 displayName: name
             })
             //make a copy of the user data and delete the password
-            const userDataCopy = {...userData}
+            const userDataCopy = { ...userData }
             delete userDataCopy.password
             //add timestanp property and set to timestamp function 
             userDataCopy.timestamp = serverTimestamp()
             // update the database, adding user to the users collection 
             await setDoc(doc(db, 'users', user.uid), userDataCopy)
+
+            
+
             //redirect
             navigate('/')
-            
+
         } catch (error) {
             console.log(error)
         }
@@ -57,8 +60,8 @@ function SignUp() {
     return (
         <>
             <div>
-                <form onSubmit={onSubmit}> 
-                    
+                <form onSubmit={onSubmit}>
+
                     <input
                         type='name'
                         placeholder='Name'
@@ -82,7 +85,7 @@ function SignUp() {
                             onChange={onChange}
                         />
 
-                        <img src={outlineEyeOpen}/>
+                        <img src={outlineEyeOpen} />
                     </div>
 
                     <button type="submit">
