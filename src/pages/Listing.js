@@ -1,6 +1,6 @@
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import { getDoc, setDoc, getDocs, doc, arrayUnion, collection, query } from 'firebase/firestore'
+import { getDoc, setDoc, addDoc, getDocs, doc, arrayUnion, collection, query } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
 import { db } from '../firebase.config'
 
@@ -15,14 +15,13 @@ function Listing() {
     const [userData, setUserData] = useState({
         name: auth.currentUser.displayName,
         userId: auth.currentUser.uid,
-        // want: auth.currentUser.wantList
     })
 
     const [wantlist, setWantlist] = useState({
         item: ''
     })
 
-    const { name, userId, wantList } = userData
+    const { name, userId } = userData
 
     const navigate = useNavigate()
     const params = useParams()
@@ -30,8 +29,9 @@ function Listing() {
 
     const addWant = async () => {
         const itemId = params.itemId
+
         setWantlist((prevState) => ({
-            prevState,
+            ...prevState,
             item: itemId
         }))
 
@@ -43,10 +43,15 @@ function Listing() {
         }));
         console.log(queryData);
 
-        queryData.map(async (v) => {
-            await setDoc(doc(db, `users/${userId}/wantlist`, 'wantlist'), wantlist);
-        })
+   
 
+        await addDoc(collection(db, `users/${userId}/wantlist`), {
+            item: itemId,
+        });
+
+
+
+        console.log(wantlist)
 
         // const docRef = doc(db, "users", `${userId}`)
         // const docSnap = await getDoc(docRef)
@@ -54,10 +59,10 @@ function Listing() {
         // if (docSnap.exists()) {
         //     console.log("Document data:", docSnap.data());
         // } else {
-            
+
         //     console.log("No such document!");
         // }
-        
+
     }
 
     useEffect(() => {
