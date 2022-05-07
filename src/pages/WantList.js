@@ -43,12 +43,20 @@ function WantList() {
 
                 querySnapshot.forEach((item) => {
                     return items.push({
-                        id: item.id,
-                        data: item.data()
+                        // id: item.id,
+                        item: item.data()
                     })
                 })
 
-                setWantItems(items)
+                const formattedItems = []
+
+                for (let i = 0; i < items.length; i++) {
+                    formattedItems.push((items[i].item.item))
+                }
+
+                console.log(formattedItems)
+
+                setWantItems(formattedItems)
 
             } catch (error) {
                 console.log(error)
@@ -57,7 +65,24 @@ function WantList() {
         fetchWantList()
     }, [uid])
 
+    
     console.log(wantItems)
+
+   
+    
+   
+    
+    // const fetchWantItems = async () => {
+    //     try {
+
+    //         wantItems.map((item) => {
+
+    //         })
+            
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
 
 
     return (
