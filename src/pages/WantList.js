@@ -1,93 +1,142 @@
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import { useState, useEffect } from 'react'
-import { collection, getDocs, query, limit, orderBy } from 'firebase/firestore'
+import { useState, useEffect, useRef } from 'react'
+import { collection, getDocs, query, limit, getDoc, doc } from 'firebase/firestore'
 import { db } from '../firebase.config'
+import WantItem from '../components/WantItem'
 
 
 
 function WantList() {
-    const [wantItems, setWantItems] = useState(null)
+    const [wantItems, setWantItems] = useState([
+        
+    ])
     const [uid, setUid] = useState(null)
+    const [loading, setLoading] = useState(false)
+    const isMounted = useRef(true)
 
     const auth = getAuth()
-   
-    useEffect(() => {
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                
-                const uid = user.uid;
-                setUid(uid)
-            } else {
-                // User is signed out
-                // ...
-            }
-        });
-    },[])
 
     useEffect(() => {
+        if (isMounted) {
+            onAuthStateChanged(auth, (user) => {
+                if (user) {
+    
+                    const uid = user.uid;
+                    setUid(uid)
+                } else {
+                    // User is signed out
+                    // ...
+                }
+            });
+        }
+
+        return ()=> {
+            isMounted.current= false
+        }
         
-        const fetchWantList = async () => {
+    }, [isMounted])
+    
+    useEffect(() => {
+        
+
+        const fetchWantList = async (uid) => {
+           
             try {
                 // get a ref to the collection 
                 const listingsRef = collection(db, `users/${uid}/wantlist`)
 
                 //create a query 
-                const q = query(listingsRef,
-                    limit(10)
-                )
-
+                const q = query(listingsRef)
+                
                 //exicute query
+                setLoading(true)
                 const querySnapshot = await getDocs(q)
 
                 const items = []
 
                 querySnapshot.forEach((item) => {
                     return items.push({
-                        // id: item.id,
+                        id: item.id,
                         item: item.data()
                     })
                 })
 
-                const formattedItems = []
+                console.log('after q snapshot', items)
+              
+                const itemData = []
 
-                for (let i = 0; i < items.length; i++) {
-                    formattedItems.push((items[i].item.item))
-                }
+                items.forEach((item) => {
 
-                console.log(formattedItems)
+                    //save this in a variable and use that 
+                    console.log('extract the id', item.item.item)
 
-                setWantItems(formattedItems)
+                    const getItemData = async () => {
+                        const docRef = doc(db, "listings", `${item.item.item}`);
+                        const docSnap = await getDoc(docRef);
 
+
+                        if (docSnap.exists()) {
+                            itemData.push({
+                                id: item.id, 
+                                data: docSnap.data()
+                            });
+                        } else {
+                            // doc.data() will be undefined in this case
+                            console.log("No such document!");
+                        }
+
+                    }
+
+                    getItemData()
+                    
+                    
+        
+                    
+                })
+                console.log('item data outside:', itemData)
+
+                //read about stale state!!!
+                setWantItems((wantItems) => wantItems.concat(itemData))
+            
+                setLoading(false)
+                
+                
             } catch (error) {
                 console.log(error)
             }
         }
-        fetchWantList()
-    }, [uid])
+        if (uid) {
 
+            fetchWantList(uid)
+        }
+        
+        
+    }, [uid]) 
     
-    console.log(wantItems)
-
+    
+        // console.log('want items in state', wantItems)
+        
    
-    
+    if ( loading === true ){
+        return <h1>Loading...</h1>
+    }
    
-    
-    // const fetchWantItems = async () => {
-    //     try {
-
-    //         wantItems.map((item) => {
-
-    //         })
-            
-    //     } catch (error) {
-    //         console.log(error)
-    //     }
-    // }
-
+ 
 
     return (
         <div>
-            Wantlist
+            
+             {"from render", console.log(wantItems)}
+            
+            <h1>{ wantItems.length && JSON.stringify(wantItems)}</h1>
+
+          
+            
+            {/* <h1>{wantItems[0].id}</h1> */}
+                
+
+
+           
         </div>
     )
 }

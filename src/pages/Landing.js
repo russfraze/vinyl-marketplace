@@ -26,6 +26,7 @@ function Landing() {
                 //Exicute query
                 const querySnapshot = await getDocs(q)
                 //create an empty array
+                console.log(querySnapshot)
                 const listings = []
 
                 querySnapshot.forEach((doc) => {
