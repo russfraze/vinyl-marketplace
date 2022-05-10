@@ -1,4 +1,4 @@
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { connectAuthEmulator, getAuth, onAuthStateChanged } from 'firebase/auth'
 import { useState, useEffect, useRef } from 'react'
 import { collection, getDocs, query, limit, getDoc, doc } from 'firebase/firestore'
 import { db } from '../firebase.config'
@@ -7,12 +7,13 @@ import WantItem from '../components/WantItem'
 
 
 function WantList() {
-    const [wantItems, setWantItems] = useState([
-        
-    ])
+    const [wantItems, setWantItems] = useState([])
     const [uid, setUid] = useState(null)
     const [loading, setLoading] = useState(false)
     const isMounted = useRef(true)
+
+    const wantRef = useRef(null)
+    wantRef.current = wantItems
 
     const auth = getAuth()
 
@@ -76,27 +77,63 @@ function WantList() {
 
 
                         if (docSnap.exists()) {
-                            itemData.push({
-                                id: item.id, 
-                                data: docSnap.data()
-                            });
+                            // itemData.push({
+                            //     id: item.id, 
+                            //     data: docSnap.data()
+                            // });
+                            setWantItems((prevState) => [
+                                ...prevState,
+                                {
+                                    id: item.id, 
+                                    data: docSnap.data()
+                                }
+                            ]
+                            )
+                            // itemData.push({
+                            //     id: item.id, 
+                            //     data: docSnap.data()
+                            // });
                         } else {
                             // doc.data() will be undefined in this case
                             console.log("No such document!");
                         }
 
                     }
-
+                    
                     getItemData()
                     
+                     
                     
-        
                     
                 })
                 console.log('item data outside:', itemData)
 
                 //read about stale state!!!
-                setWantItems((wantItems) => wantItems.concat(itemData))
+                // setWantItems((wantItems) => wantItems.concat(itemData))
+                // setWantItems(wantRef.current)
+                
+
+
+                setWantItems((prevState) => [...itemData, prevState] )
+
+                // setWantItems((prevState) => {
+                //     return [
+                //         ...prevState,
+                //         itemData
+
+                //     ]
+
+                    
+                // })
+
+
+
+
+
+
+                //try to use map
+
+
             
                 setLoading(false)
                 
@@ -126,8 +163,11 @@ function WantList() {
     return (
         <div>
             
-             {"from render", console.log(wantItems)}
+             {console.log( 'wantItems from render',wantItems)}
+             {console.log( 'wantRef from render',wantRef.current)}
             
+            
+            {/* <h1>{ wantItems.length && JSON.stringify(wantItems)}</h1> */}
             <h1>{ wantItems.length && JSON.stringify(wantItems)}</h1>
 
           
