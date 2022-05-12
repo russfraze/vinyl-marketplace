@@ -23,7 +23,8 @@ function Landing() {
         { value: 'Disco', label: 'Disco' },
         { value: 'Electronic', label: 'Electronic' },
         { value: 'House', label: 'House' },
-        { value: 'Techno', label: 'Techno' }
+        { value: 'Techno', label: 'Techno' },
+        { value: null, label: 'all' }
     ]
 
     useEffect(() => {
