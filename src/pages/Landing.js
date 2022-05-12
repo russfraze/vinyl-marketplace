@@ -13,32 +13,8 @@ function Landing() {
 
     const [loading, setLoading] = useState(true)
     const [listings, setListings] = useState(null)
+    const [filteredListings, setFilteredListings] = useState(listings)
     const [filterGenre, setFilterGenre] = useState([])
-
-    
-
-
-    
-    // const filterArray = () => {
-        
-    //     console.log(filterRef.current)
-    //     const filteredListings = listings.filter(listing => listing.data.genreStyle.value == filterGenre)
-        
-        
-        
-        
-        
-    // }
-    
-    
-    // if (filterGenre.value) {
-        
-    //     filterArray()
-        
-    // }
-
-
-
 
 
     const genreOptions = [
@@ -50,41 +26,96 @@ function Landing() {
         { value: 'Techno', label: 'Techno' }
     ]
 
+    useEffect(() => {
+        ///messing with this part 
+        if (filterGenre.value) {
+            console.log('if met')
+            console.log(filterGenre.value)
+            const filterArray = () => {
+                const filteredListings = listings.filter(listing => listing.data.genreStyle.value == filterGenre.value)
+                setFilteredListings(filteredListings)
+            }
+
+            filterArray()
+        } //put the filter above here take out what in dep array 
+
+    }, [filterGenre])
 
 
     useEffect(() => {
         const fetchListings = async () => {
-            try {
-                //get a ref to the collection 
-                const listingsRef = collection(db, 'listings')
 
-                //create a query
-                const q = query(listingsRef,
-                    orderBy('timestamp', 'desc'), limit(10)
-                )
-
-                //Exicute query
-                const querySnapshot = await getDocs(q)
-                //create an empty array
-                console.log(querySnapshot)
-                const listings = []
-
-                querySnapshot.forEach((doc) => {
-                    return listings.push({
-                        id: doc.id,
-                        data: doc.data()
+            if (filterGenre.value ) {
+                console.log('filterGenre has value')
+                console.log(filterGenre.value)
+                try {
+                    //get a ref to the collection 
+                    const listingsRef = collection(db, 'listings')
+                   
+                    //create a query
+                    const q = query(listingsRef, where( 'genreStyle.value', '==', filterGenre.value)
+                        // orderBy('timestamp', 'desc'), limit(10)
+                    )
+                    //Exicute query
+                    const querySnapshot = await getDocs(q)
+                    
+                    //create an empty array
+                    console.log(querySnapshot)
+                    const listings = []
+    
+                    querySnapshot.forEach((doc) => {
+                        return listings.push({
+                            id: doc.id,
+                            data: doc.data()
+                        })
                     })
-                })
-                setListings(listings)
-                console.log(listings)
+    
+                    setListings(listings)
+                    console.log(listings)
+    
+                } catch (error) {
+                    toast.error('can not show listings')
+                }
+                
+            } else {
+                console.log('else: filterGenre is null')
+                //get the unfiltered list from database
+                try {
+                    //get a ref to the collection 
+                    const listingsRef = collection(db, 'listings')
+                   
+                    //create a query
+                    const q = query(listingsRef,
+                        orderBy('timestamp', 'desc'), limit(10)
+                    )
+                    //Exicute query
+                    const querySnapshot = await getDocs(q)
+                    
+                    //create an empty array
+                    console.log(querySnapshot)
+                    const listings = []
+    
+                    querySnapshot.forEach((doc) => {
+                        return listings.push({
+                            id: doc.id,
+                            data: doc.data()
+                        })
+                    })
+    
+                    setListings(listings)
+                    console.log(listings)
+    
+                } catch (error) {
+                    toast.error('can not show listings')
+                }
 
-
-            } catch (error) {
-                toast.error('can not show listings')
+                
             }
+
+
         }
         fetchListings()
-    }, [])
+    }, [filterGenre])
 
 
 
