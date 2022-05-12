@@ -14,11 +14,14 @@ import { toast } from 'react-toastify'
 const grades = [
     { value: 'Mint', label: 'Mint' },
     { value: 'VG+', label: 'VG+' },
-    { value: 'VG', label: 'VG' }
+    { value: 'VG', label: 'VG' },
+    { value: 'G+', label: 'G+' },
+    { value: 'G', label: 'G' },
 ]
 const formatOptions = [
     { value: '12"', label: 'Mint' },
     { value: '12" Maxi Single', label: '12" Maxi Single' },
+    { value: '12"', label: '12"' },
     { value: '7"', label: '7"' },
     { value: '45', label: '45' }
 ]

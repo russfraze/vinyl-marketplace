@@ -32,9 +32,6 @@ code {
   align-items: center;
 }
 
-.navbarListItem{
-
-}
 
 .inputActive{
   color:darkgrey
@@ -45,5 +42,33 @@ code {
 }
 
 
+/* listing item component */
+
+.listingItem {
+  list-style-type: none;
+  display: flex;
+  width: 225px;
+  margin-right: 30px;
+}
+
+.listingItemImg {
+  height: 200px;
+  text-decoration: none;
+}
+
+.listingItemLink{
+  display: contents;
+  color: #000;
+}
 
 
+/* landing page */
+
+.landingUl {
+  display: flex;
+  flex-direction: row;
+  /* flex-grow: 1; */
+  width: 96vw;
+  flex-wrap: wrap;
+
+}

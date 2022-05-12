@@ -1,9 +1,11 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { collection, getDocs, query, limit, where, orderBy } from 'firebase/firestore'
 import { db } from '../firebase.config'
 import { toast } from 'react-toastify'
 import ListingItem from '../components/ListingItem'
+import React, { Component } from 'react'
+import Select from 'react-select'
 
 
 
@@ -11,6 +13,44 @@ function Landing() {
 
     const [loading, setLoading] = useState(true)
     const [listings, setListings] = useState(null)
+    const [filterGenre, setFilterGenre] = useState([])
+
+    
+
+
+    
+    // const filterArray = () => {
+        
+    //     console.log(filterRef.current)
+    //     const filteredListings = listings.filter(listing => listing.data.genreStyle.value == filterGenre)
+        
+        
+        
+        
+        
+    // }
+    
+    
+    // if (filterGenre.value) {
+        
+    //     filterArray()
+        
+    // }
+
+
+
+
+
+    const genreOptions = [
+        { value: 'Reggae', label: 'Reggae' },
+        { value: 'Disco Edits', label: 'Disco Edits' },
+        { value: 'Disco', label: 'Disco' },
+        { value: 'Electronic', label: 'Electronic' },
+        { value: 'House', label: 'House' },
+        { value: 'Techno', label: 'Techno' }
+    ]
+
+
 
     useEffect(() => {
         const fetchListings = async () => {
@@ -46,6 +86,8 @@ function Landing() {
         fetchListings()
     }, [])
 
+
+
     return (
         <div>
             <h1>Landing</h1>
@@ -53,7 +95,14 @@ function Landing() {
                 Sign In
             </Link>
 
-            <ul>
+            <Select
+                options={genreOptions}
+                id='filter'
+                value={filterGenre}
+                onChange={setFilterGenre}
+            />
+
+            <ul className='landingUl'>
                 {listings && listings.map((item) => (
                     <ListingItem
                         item={item.data}
@@ -61,7 +110,7 @@ function Landing() {
                         key={item.id}
                     />
                 ))}
-            </ul>  
+            </ul>
         </div>
     )
 }

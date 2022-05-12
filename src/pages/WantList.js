@@ -3,6 +3,7 @@ import { useState, useEffect, useRef } from 'react'
 import { collection, getDocs, query, limit, getDoc, doc } from 'firebase/firestore'
 import { db } from '../firebase.config'
 import WantItem from '../components/WantItem'
+import ListingItem from '../components/ListingItem'
 
 
 
@@ -113,8 +114,8 @@ function WantList() {
                 // setWantItems(wantRef.current)
                 
 
-
-                setWantItems((prevState) => [...itemData, prevState] )
+                console.log('the end',wantItems)
+                // setWantItems((prevState) => [...itemData, prevState] )
 
                 // setWantItems((prevState) => {
                 //     return [
@@ -168,7 +169,19 @@ function WantList() {
             
             
             {/* <h1>{ wantItems.length && JSON.stringify(wantItems)}</h1> */}
-            <h1>{ wantItems.length && JSON.stringify(wantItems)}</h1>
+
+            <ul>
+                {wantItems && wantItems.map((item) => (
+                    <ListingItem
+                        item={item.data}
+                        id={item.id}
+                        key={item.id}
+                    />
+                ))}
+            </ul>  
+
+            
+            {/* <h1>{ wantItems.length && JSON.stringify(wantItems)}</h1> */}
 
           
             
