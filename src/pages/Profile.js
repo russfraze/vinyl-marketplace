@@ -88,6 +88,8 @@ function Profile() {
         }
     }
 
+    const onEdit = (itemId) => navigate(`/edit-listing/${itemId}`)
+
     return (
         <>
             {/* {user ? <h1>{user.displayName}</h1> : 'Not logged in'} */}
@@ -125,7 +127,13 @@ function Profile() {
                 <p>Your Listings</p>
                 <ul>
                     {listings.map((item) => (
-                        <ListingItem key={item.id} item={item.data} id={item.id} onDelete={() => onDelete(item.id) }/>
+                        <ListingItem 
+                        key={item.id} 
+                        item={item.data} 
+                        id={item.id} 
+                        onDelete={() => onDelete(item.id) } 
+                        onEdit={() => onEdit(item.id)}
+                        />
                     ))}
                 </ul>
                 </>
