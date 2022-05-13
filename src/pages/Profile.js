@@ -1,13 +1,17 @@
 import { getAuth, updateProfile } from 'firebase/auth'
 import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import {updateDoc, doc} from 'firebase/firestore'
+import {updateDoc, doc, collection, getDocs, query, where, orderBy, deleteDoc } from 'firebase/firestore'
 import {db} from '../firebase.config'
+import ListingItem from '../components/ListingItem'
+import {toast} from 'react-toastify'
 
 function Profile() {
     const auth = getAuth()
 
     const [changeDetails, setChangeDetails] = useState(false)
+    // const [loading, setLoading] = useState(true)
+    const [listings, setListings] = useState(null)
     const [userData, setUserData] = useState({
         name: auth.currentUser.displayName,
         email: auth.currentUser.email,
@@ -17,6 +21,30 @@ function Profile() {
     
 
     const navigate = useNavigate()
+
+    useEffect(() => {
+        const fetchUserListings = async () => {
+            const listingsRef = collection(db, 'listings')
+
+            const q = query(listingsRef, where( 'userRef', '==', auth.currentUser.uid), orderBy('timestamp', 'desc'))
+
+            const querySnap = await getDocs(q)
+
+            const listings = []
+
+            querySnap.forEach((item) => {
+                return listings.push({
+                    id: item.id,
+                    data: item.data()
+                })
+            })
+
+            setListings(listings)
+
+        }
+
+        fetchUserListings()
+    },[auth.currentUser.uid])
 
     const logOut = () => {
         console.log('err')
@@ -51,6 +79,15 @@ function Profile() {
        }))   
     }
 
+    const onDelete = async (itemId) => {
+        if (window.confirm ('Are you sure you want to delete this listing?')) {
+            await deleteDoc(doc(db, 'listings', itemId))
+            const updatedListings = listings.filter((item) => item.id !== itemId)
+            setListings(updatedListings)
+            toast.success("Listing deleted")
+        }
+    }
+
     return (
         <>
             {/* {user ? <h1>{user.displayName}</h1> : 'Not logged in'} */}
@@ -82,6 +119,18 @@ function Profile() {
 
             <button type="button" onClick={logOut}>Logout</button>
             <Link to='/create-listing'>Create Listing</Link>
+
+            {listings?.length > 0 && (
+                <>
+                <p>Your Listings</p>
+                <ul>
+                    {listings.map((item) => (
+                        <ListingItem key={item.id} item={item.data} id={item.id} onDelete={() => onDelete(item.id) }/>
+                    ))}
+                </ul>
+                </>
+            )}
+
         </>
     )
 }

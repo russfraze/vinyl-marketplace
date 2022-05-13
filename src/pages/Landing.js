@@ -49,6 +49,7 @@ function Landing() {
             if (filterGenre.value ) {
                 console.log('filterGenre has value')
                 console.log(filterGenre.value)
+                //get the filtered results
                 try {
                     //get a ref to the collection 
                     const listingsRef = collection(db, 'listings')

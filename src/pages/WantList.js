@@ -2,7 +2,6 @@ import { connectAuthEmulator, getAuth, onAuthStateChanged } from 'firebase/auth'
 import { useState, useEffect, useRef } from 'react'
 import { collection, getDocs, query, limit, getDoc, doc } from 'firebase/firestore'
 import { db } from '../firebase.config'
-import WantItem from '../components/WantItem'
 import ListingItem from '../components/ListingItem'
 
 
@@ -78,10 +77,7 @@ function WantList() {
 
 
                         if (docSnap.exists()) {
-                            // itemData.push({
-                            //     id: item.id, 
-                            //     data: docSnap.data()
-                            // });
+                          
                             setWantItems((prevState) => [
                                 ...prevState,
                                 {
@@ -90,12 +86,9 @@ function WantList() {
                                 }
                             ]
                             )
-                            // itemData.push({
-                            //     id: item.id, 
-                            //     data: docSnap.data()
-                            // });
+                           
                         } else {
-                            // doc.data() will be undefined in this case
+                            
                             console.log("No such document!");
                         }
 
@@ -109,33 +102,9 @@ function WantList() {
                 })
                 console.log('item data outside:', itemData)
 
-                //read about stale state!!!
-                // setWantItems((wantItems) => wantItems.concat(itemData))
-                // setWantItems(wantRef.current)
-                
 
                 console.log('the end',wantItems)
-                // setWantItems((prevState) => [...itemData, prevState] )
-
-                // setWantItems((prevState) => {
-                //     return [
-                //         ...prevState,
-                //         itemData
-
-                //     ]
-
-                    
-                // })
-
-
-
-
-
-
-                //try to use map
-
-
-            
+               
                 setLoading(false)
                 
                 
@@ -152,9 +121,16 @@ function WantList() {
     }, [uid]) 
     
     
-        // console.log('want items in state', wantItems)
-        
-   
+    const deleteWantItem = () => {
+
+    }
+
+
+
+
+
+
+
     if ( loading === true ){
         return <h1>Loading...</h1>
     }
@@ -185,7 +161,6 @@ function WantList() {
 
           
             
-            {/* <h1>{wantItems[0].id}</h1> */}
                 
 
 
