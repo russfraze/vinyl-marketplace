@@ -123,11 +123,7 @@ function Landing() {
 
     return (
         <div>
-            <h1>Landing</h1>
-            <Link to='/sign-in'>
-                Sign In
-            </Link>
-
+            
             <Select
                 options={genreOptions}
                 id='filter'

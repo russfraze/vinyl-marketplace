@@ -17,6 +17,7 @@ function App() {
   return (
     <>
       <Router>
+        <Navbar />
         <Routes>
           <Route path='/' element={<Landing />} />
           <Route path='/forgot-password' element={<ForgotPassword />} />
@@ -31,7 +32,6 @@ function App() {
           <Route path='/edit-listing/:itemId' element={<EditListing />} />
 
         </Routes>
-        <Navbar />
       </Router>
       <ToastContainer />
     </>

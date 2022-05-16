@@ -43,7 +43,7 @@ function Listing() {
         }));
         console.log(queryData);
 
-   
+
 
         await addDoc(collection(db, `users/${userId}/wantlist`), {
             item: itemId,
@@ -87,18 +87,20 @@ function Listing() {
 
     return (
         <main>
-            Listing single item
 
-            <div>
-                <img src={listing.imgUrls[0]}></img>
-                <h1>{listing.artistTitle}</h1>
-                <p>{listing.label}</p>
-                <p>{listing.condition.value}</p>
-                <p>{listing.genreStyle.value}</p>
-                <p>$ {listing.price}</p>
+            <div className="singleListing">
+                <div>
+                    <img src={listing.imgUrls[0]}></img>
+                    <h1>{listing.artistTitle}</h1>
+                    <p>Label:  {listing.label}</p>
+                    <p>Condition:  {listing.condition.value}</p>
+                    <p>Genre / Style: {listing.genreStyle.value}</p>
+                    <p>Description: {listing.description}</p>
+                    <h3>$ {listing.price}</h3>
+                </div>
+                <button className="primaryButton" type='button'>Add to cart</button>
+                <button className="primaryButton" type='button' onClick={addWant}>Add to wantlist</button>
             </div>
-            <button type='button'>Add to cart</button>
-            <button type='button' onClick={addWant}>Add to wantlist</button>
         </main>
     )
 }

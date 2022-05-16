@@ -12,7 +12,7 @@ function ListingItem({ item, id, onEdit, onDelete }) {
                     <div className='listingItemDetails'>
                         <h3>{item.artistTitle}</h3>
                         <p>Genre / Style: {item.genreStyle.value}</p>
-                        <p>{item.description}</p>
+                        {/* <p>{item.description}</p> */}
                         <p>Condition Rating: {item.condition.value}</p>
                         <p>$ {item.price}</p>
                     </div>

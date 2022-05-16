@@ -1,8 +1,11 @@
-import {useNavigate, useLocation, Navigate} from 'react-router-dom'
+import { useNavigate, useLocation, Navigate,Link } from 'react-router-dom'
+import { getAuth } from 'firebase/auth'
 
 function Navbar() {
     const navigate = useNavigate()
-    const location = useLocation() 
+    const location = useLocation()
+
+    const auth = getAuth()
 
 
     return (
@@ -10,18 +13,20 @@ function Navbar() {
             <nav className='navbarNav'>
                 <ul className='navbarListItems'>
                     <li className='navbarListItem' onClick={() => navigate('/')}>
-                        <h1>Home</h1>
+                        <p>Home</p>
                     </li>
                     <li className='navbarListItem'>
-                        <h1>Something</h1>
+                        <p>Something</p>
                     </li>
-                    <li className='navbarListItem'onClick={() => navigate('/profile')}>
-                        <h1>Profile</h1>
+                    <li className='navbarListItem' onClick={() => navigate('/profile')}>
+                        <p>Profile</p>
                     </li>
+
+                    {!auth.currentUser && <li><Link className="navbarLink" to='/sign-in'>Sign In</Link></li>}                 
                 </ul>
 
             </nav>
-            
+
         </footer>
     )
 }
