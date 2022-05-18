@@ -89,17 +89,17 @@ function Listing() {
         <main>
 
             <div className="singleListing">
-                <div>
-                    <img src={listing.imgUrls[0]}></img>
+                    <img className='singleListingImg' src={listing.imgUrls[0]}></img>
+                <div className="singleListingItems">
                     <h1>{listing.artistTitle}</h1>
                     <p>Label:  {listing.label}</p>
                     <p>Condition:  {listing.condition.value}</p>
                     <p>Genre / Style: {listing.genreStyle.value}</p>
                     <p>Description: {listing.description}</p>
                     <h3>$ {listing.price}</h3>
+                    <button className="primaryButton" type='button'>Add to cart</button>
+                    <button className="primaryButton" type='button' onClick={addWant}>Add to wantlist</button>
                 </div>
-                <button className="primaryButton" type='button'>Add to cart</button>
-                <button className="primaryButton" type='button' onClick={addWant}>Add to wantlist</button>
             </div>
         </main>
     )

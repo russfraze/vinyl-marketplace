@@ -1,4 +1,4 @@
-import { useNavigate, useLocation, Navigate,Link } from 'react-router-dom'
+import { useNavigate, useLocation, Navigate, Link } from 'react-router-dom'
 import { getAuth } from 'firebase/auth'
 
 function Navbar() {
@@ -7,22 +7,32 @@ function Navbar() {
 
     const auth = getAuth()
 
+    //check to see if the location matches 
+    const pathMatchRoute = (route) => {
+        if(route === location.pathname) {
+            return true
+        }
+
+    }
+
 
     return (
         <footer className='navbar'>
             <nav className='navbarNav'>
                 <ul className='navbarListItems'>
                     <li className='navbarListItem' onClick={() => navigate('/')}>
-                        <p>Home</p>
+                        <p className={pathMatchRoute('/') ? 'navbarActive' : ''}>Home</p>
                     </li>
                     <li className='navbarListItem'>
-                        <p>Something</p>
+                        <p >Something</p>
                     </li>
                     <li className='navbarListItem' onClick={() => navigate('/profile')}>
-                        <p>Profile</p>
+                        <p className={pathMatchRoute('/profile') ? 'navbarActive' : ''}>Profile</p>
                     </li>
 
-                    {!auth.currentUser && <li><Link className="navbarLink" to='/sign-in'>Sign In</Link></li>}                 
+                    {!auth.currentUser && <li className='navbarListItem' onClick={() => navigate('/sign-in')}>
+                        <p>Sign In</p>
+                    </li>}
                 </ul>
 
             </nav>

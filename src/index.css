@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@700&family=Roboto+Mono:wght@100;200;300;400;600;700&display=swap');
+
+
 body {
   margin: 0;
   background-color: #bfbfbf;
@@ -15,6 +18,7 @@ code {
 
 h1, h2, h3, p {
   color: #6b6b6b;
+  font-family: Roboto Mono;
 }
 
 button {
@@ -32,8 +36,8 @@ button {
   font-size: 12px;
   /* margin: 0 auto; */
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-self: start;
+  margin-bottom: 9px;
 }
 
 .navbar{
@@ -55,12 +59,20 @@ button {
   align-items: center;
   color: #909090;
   list-style-type: none;
+  
 }
 
 .navbarLink {
   display: contents;
   color: #6b6b6b;
 } 
+
+.navbarActive {
+  color: #bfbfbf;
+}
+.navbarInactive {
+  color: #6b6b6b;
+}
 
 .inputActive{
   color:darkgrey
@@ -88,7 +100,8 @@ button {
 .listingItemLink{
   display: contents;
   color: #000;
-}
+  font-size: 10px;
+} 
 
 
 /* landing page */
@@ -105,5 +118,15 @@ button {
 /* Listing page */
 
 .singleListing {
+  display: flex;
   margin: 64px 0px 0px 64px;
+}
+
+.singleListingItems {
+  display: flex;
+  flex-direction: column;
+}
+
+.singleListingImg {
+  height: 350px;
 }

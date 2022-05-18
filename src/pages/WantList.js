@@ -1,8 +1,9 @@
 import { connectAuthEmulator, getAuth, onAuthStateChanged } from 'firebase/auth'
 import { useState, useEffect, useRef } from 'react'
-import { collection, getDocs, query, limit, getDoc, doc } from 'firebase/firestore'
+import { collection, getDocs, query, limit, getDoc, doc, deleteDoc } from 'firebase/firestore'
 import { db } from '../firebase.config'
 import ListingItem from '../components/ListingItem'
+import {toast} from 'react-toastify'
 
 
 
@@ -121,8 +122,13 @@ function WantList() {
     }, [uid]) 
     
     
-    const deleteWantItem = () => {
-
+    const onDelete = async (itemId) => {
+        if (window.confirm ('Are you sure you want to delete this from your want list?')) {
+            await deleteDoc(doc(db, `users/${auth.currentUser.uid}/wantlist`, itemId))
+            const updatedWantlist = wantItems.filter((item) => item.id !== itemId)
+            setWantItems(updatedWantlist)
+            toast.success("Want list item deleted")
+        }
     }
 
 
@@ -152,11 +158,11 @@ function WantList() {
                         item={item.data}
                         id={item.id}
                         key={item.id}
+                        onDelete={() => onDelete(item.id) }
                     />
                 ))}
             </ul>  
 
-            
             {/* <h1>{ wantItems.length && JSON.stringify(wantItems)}</h1> */}
 
           
