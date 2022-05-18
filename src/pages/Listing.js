@@ -21,6 +21,10 @@ function Listing() {
         item: ''
     })
 
+    const [cart, setCart] = useState({
+        item: ''
+    })
+
     const { name, userId } = userData
 
     const navigate = useNavigate()
@@ -35,16 +39,6 @@ function Listing() {
             item: itemId
         }))
 
-        const q = query(collection(db, "users"));
-        const querySnapshot = await getDocs(q);
-        const queryData = querySnapshot.docs.map((item) => ({
-            ...item.data(),
-            id: item.id,
-        }));
-        console.log(queryData);
-
-
-
         await addDoc(collection(db, `users/${userId}/wantlist`), {
             item: itemId,
         });
@@ -53,15 +47,25 @@ function Listing() {
 
         console.log(wantlist)
 
-        // const docRef = doc(db, "users", `${userId}`)
-        // const docSnap = await getDoc(docRef)
 
-        // if (docSnap.exists()) {
-        //     console.log("Document data:", docSnap.data());
-        // } else {
+    }
 
-        //     console.log("No such document!");
-        // }
+    const addCart = async () => {
+        const itemId = params.itemId
+
+        setCart((prevState) => ({
+            ...prevState,
+            item: itemId
+        }))
+
+        await addDoc(collection(db, `users/${userId}/cart`), {
+            item: itemId,
+        });
+
+
+
+        console.log('log cart:',cart)
+
 
     }
 
@@ -97,7 +101,7 @@ function Listing() {
                     <p>Genre / Style: {listing.genreStyle.value}</p>
                     <p>Description: {listing.description}</p>
                     <h3>$ {listing.price}</h3>
-                    <button className="primaryButton" type='button'>Add to cart</button>
+                    <button className="primaryButton" type='button' onClick={addCart}>Add to cart</button>
                     <button className="primaryButton" type='button' onClick={addWant}>Add to wantlist</button>
                 </div>
             </div>

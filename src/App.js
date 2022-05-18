@@ -11,6 +11,7 @@ import Listing from './pages/Listing'
 import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import WantList from './pages/WantList'
+import Cart from './pages/Cart'
 import EditListing from './pages/EditListing'
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route path='/create-listing' element={<CreateListing />} />
           <Route path='/landing/:itemId' element={<Listing />} />
           <Route path='/want-list' element={<WantList />} />
+          <Route path='/cart' element={<Cart />} />
           <Route path='/edit-listing/:itemId' element={<EditListing />} />
 
         </Routes>
