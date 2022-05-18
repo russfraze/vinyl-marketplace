@@ -137,6 +137,20 @@ function Cart() {
 
 
 
+    console.log( ' just gimme',cartItems.length)
+    console.log( ' stringify',  JSON.stringify(cartItems))
+
+    let sum = 0
+    
+    for (let i = 0; i < cartItems.length; i++) {
+        sum += parseInt(cartItems[i].data.price)
+    }
+
+    console.log(sum)
+
+
+
+
 
     if ( loading === true ){
         return <h1>Loading...</h1>
@@ -146,13 +160,6 @@ function Cart() {
 
     return (
         <div>
-            
-             {/* {console.log( 'wantItems from render',wantItems)}
-             {console.log( 'wantRef from render',wantRef.current)} */}
-            
-            
-            {/* <h1>{ wantItems.length && JSON.stringify(wantItems)}</h1> */}
-
             <ul>
                 {cartItems && cartItems.map((item) => (
                     <ListingItem
@@ -162,16 +169,8 @@ function Cart() {
                         onDelete={() => onDelete(item.id) }
                     />
                 ))}
-            </ul>  
-
-            {/* <h1>{ wantItems.length && JSON.stringify(wantItems)}</h1> */}
-
-          
-            
-                
-
-
-           
+            </ul> 
+            <h1>Total: ${sum}.00</h1> 
         </div>
     )
 }
