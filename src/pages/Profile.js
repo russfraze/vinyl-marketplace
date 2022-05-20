@@ -1,10 +1,10 @@
 import { getAuth, updateProfile } from 'firebase/auth'
 import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import {updateDoc, doc, collection, getDocs, query, where, orderBy, deleteDoc } from 'firebase/firestore'
-import {db} from '../firebase.config'
+import { updateDoc, doc, collection, getDocs, query, where, orderBy, deleteDoc } from 'firebase/firestore'
+import { db } from '../firebase.config'
 import ListingItem from '../components/ListingItem'
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify'
 
 function Profile() {
     const auth = getAuth()
@@ -16,9 +16,9 @@ function Profile() {
         name: auth.currentUser.displayName,
         email: auth.currentUser.email,
     })
-    const {name, email} = userData
+    const { name, email } = userData
 
-    
+
 
     const navigate = useNavigate()
 
@@ -26,7 +26,7 @@ function Profile() {
         const fetchUserListings = async () => {
             const listingsRef = collection(db, 'listings')
 
-            const q = query(listingsRef, where( 'userRef', '==', auth.currentUser.uid), orderBy('timestamp', 'desc'))
+            const q = query(listingsRef, where('userRef', '==', auth.currentUser.uid), orderBy('timestamp', 'desc'))
 
             const querySnap = await getDocs(q)
 
@@ -44,7 +44,7 @@ function Profile() {
         }
 
         fetchUserListings()
-    },[auth.currentUser.uid])
+    }, [auth.currentUser.uid])
 
     const logOut = () => {
         console.log('err')
@@ -54,7 +54,7 @@ function Profile() {
 
     const onSubmit = async () => {
         try {
-            if (name !== auth.currentUser.displayName){
+            if (name !== auth.currentUser.displayName) {
                 await updateProfile(auth.currentUser, {
                     displayName: name
                 })
@@ -67,20 +67,20 @@ function Profile() {
 
 
         } catch (error) {
-            
+
         }
         console.log(userData)
     }
 
     const onChange = (e) => {
-       setUserData((prevState) => ({
-           ...prevState,
-           [e.target.id]: e.target.value
-       }))   
+        setUserData((prevState) => ({
+            ...prevState,
+            [e.target.id]: e.target.value
+        }))
     }
 
     const onDelete = async (itemId) => {
-        if (window.confirm ('Are you sure you want to delete this listing?')) {
+        if (window.confirm('Are you sure you want to delete this listing?')) {
             await deleteDoc(doc(db, 'listings', itemId))
             const updatedListings = listings.filter((item) => item.id !== itemId)
             setListings(updatedListings)
@@ -93,52 +93,56 @@ function Profile() {
     return (
         <>
             {/* {user ? <h1>{user.displayName}</h1> : 'Not logged in'} */}
+
+            <div className='profileBody'>
             <h3>Personal Details</h3>
-            <p onClick={()=> {
-                changeDetails && onSubmit()
-                setChangeDetails((prevState) => !prevState)
-            }}>{ changeDetails ? 'done' : 'change'}</p>
-            <h3>{name}</h3>
-
-            <form>
-                <input 
-                className={!changeDetails ? 'inputActive' : 'inputDisabled'}
-                type="text"
-                value={name}
-                id="name"
-                disabled={!changeDetails}
-                onChange={onChange}
-                /> 
-                <input 
-                className={!changeDetails ? 'inputActive' : 'inputDisabled'}
-                type="text"
-                value={email}
-                id="email"
-                disabled={!changeDetails}
-                onChange={onChange}
-                /> 
-            </form>
-
-            <button type="button" onClick={logOut}>Logout</button>
-            <Link to='/create-listing'>Create Listing</Link>
-
-            {listings?.length > 0 && (
-                <>
-                <p>Your Listings</p>
-                <ul>
-                    {listings.map((item) => (
-                        <ListingItem 
-                        key={item.id} 
-                        item={item.data} 
-                        id={item.id} 
-                        onDelete={() => onDelete(item.id) } 
-                        onEdit={() => onEdit(item.id)}
+                <div className='profileForm'>
+                    <h3 className='profileName'>{name}</h3>
+                    <form>
+                        <input
+                            className={!changeDetails ? 'inputActive' : 'inputDisabled'}
+                            type="text"
+                            value={name}
+                            id="name"
+                            disabled={!changeDetails}
+                            onChange={onChange}
                         />
-                    ))}
-                </ul>
-                </>
-            )}
+                        <input
+                            className={!changeDetails ? 'inputActive' : 'inputDisabled'}
+                            type="text"
+                            value={email}
+                            id="email"
+                            disabled={!changeDetails}
+                            onChange={onChange}
+                        />
+                    </form>
+                    <p className='changeDetailsBtn' onClick={() => {
+                        changeDetails && onSubmit()
+                        setChangeDetails((prevState) => !prevState)
+                    }}>{changeDetails ? 'done' : 'change'}</p>
+                    <button className='primaryButton' type="button" onClick={logOut}>Logout</button>
+                </div>
+                <Link to='/create-listing'>
+                    <button className='primaryButton'>Create Listing</button>
+                </Link>
 
+                {listings?.length > 0 && (
+                    <div>
+                        <h3>Your Listings</h3>
+                        <ul className='profileUl'>
+                            {listings.map((item) => (
+                                <ListingItem
+                                    key={item.id}
+                                    item={item.data}
+                                    id={item.id}
+                                    onDelete={() => onDelete(item.id)}
+                                    onEdit={() => onEdit(item.id)}
+                                />
+                            ))}
+                        </ul>
+                    </div>
+                )}
+            </div>
         </>
     )
 }

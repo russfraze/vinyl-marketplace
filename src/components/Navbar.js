@@ -1,5 +1,6 @@
 import { useNavigate, useLocation, Navigate, Link } from 'react-router-dom'
 import { getAuth } from 'firebase/auth'
+import BLUE from '../assets/BLUE.png'
 
 function Navbar() {
     const navigate = useNavigate()
@@ -19,6 +20,7 @@ function Navbar() {
     return (
         <footer className='navbar'>
             <nav className='navbarNav'>
+                <img className='navbarLogo' src={BLUE} alt='home'/>
                 <ul className='navbarListItems'>
                     <li className='navbarListItem' onClick={() => navigate('/')}>
                         <p className={pathMatchRoute('/') ? 'navbarActive' : ''}>Home</p>

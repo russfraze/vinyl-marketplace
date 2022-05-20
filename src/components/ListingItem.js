@@ -20,11 +20,11 @@ function ListingItem({ item, id, onEdit, onDelete }) {
 
                 {onDelete && (
 
-                    <button onClick={() => onDelete(item.id, item.name)}>Delete</button>
+                    <button className='primaryButton' onClick={() => onDelete(item.id, item.name)}>Delete</button>
                   
                 )}
 
-                {onEdit && <button onClick={() => onEdit(id)}>Edit</button>}
+                {onEdit && <button className='primaryButton' onClick={() => onEdit(id)}>Edit</button>}
             </div>
 
         </li >

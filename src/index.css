@@ -3,7 +3,7 @@
 
 body {
   margin: 0;
-  background-color: #bfbfbf;
+  background-color: ghostwhite;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -42,24 +42,34 @@ button {
 
 .navbar{
   background-color: #212121;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  /* display: flex; */
+  flex-direction: row;
+  /* justify-content: center; */
+  /* align-items: center; */
   height: 90px;
 }
 
 .navbarNav{
+  display: flex;
   width: 100%;
   overflow: hidden;
+  justify-content: space-between;
 }
 
 .navbarListItems{
   display: flex;
-  justify-content: space-evenly;
-  align-items: center;
+  flex-direction: row;
   color: #909090;
   list-style-type: none;
-  
+  padding-right: 25px;
+}
+
+.navbarListItems li {
+  padding-right: 25px;
+}
+
+.navbarLogo {
+  padding-left: 25px;
 }
 
 .navbarLink {
@@ -74,13 +84,7 @@ button {
   color: #6b6b6b;
 }
 
-.inputActive{
-  color:darkgrey
-}
 
-.inputDisabled{
-  background-color: ghostwhite;
-}
 
 
 /* listing item component */
@@ -111,7 +115,7 @@ button {
   flex-direction: row;
   width: 96vw;
   flex-wrap: wrap;
-
+  justify-content: center;
 }
 
 
@@ -125,8 +129,87 @@ button {
 .singleListingItems {
   display: flex;
   flex-direction: column;
+  width: 450px;
+  padding-left: 45px;
 }
 
 .singleListingImg {
   height: 350px;
+}
+
+
+/* Profile page  */
+
+.profileBody {
+  margin-right: 35px;
+  margin-left: 35px;
+}
+
+.profileForm {
+  background-color: #6b6b6b;
+  padding: 35px;
+  margin-bottom: 65px;
+}
+
+.changeDetailsBtn {
+  color: #212121;
+}
+
+.profileName {
+  color: #bfbfbf;
+}
+
+.inputActive{
+  color:darkgrey
+}
+
+.inputDisabled{
+  background-color: ghostwhite;
+}
+
+.profileUl {
+  display: flex;
+  flex-direction: row;
+  width: 96vw;
+  flex-wrap: wrap;
+
+}
+
+
+@media screen and (max-width: 768px) {
+
+  .navbar{
+    background-color: #212121;
+    flex-direction: row;
+    height: 115px;
+  }
+  .navbarNav{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow: hidden;
+    /* justify-content: space-between; */
+    align-items: center;
+  }
+
+  .navbarLogo {
+    padding-left: 25px;
+    width: 300px
+  }
+
+  .navbarListItems  {
+    margin-top: 0px;
+    margin-bottom: 0px;
+  
+  }
+  .navbarListItems li {
+    padding-right: 18px;
+    padding-left: 18px;
+  }
+
+  .navbarListItems p {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    
+  }
 }

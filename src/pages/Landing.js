@@ -27,8 +27,7 @@ function Landing() {
         { value: null, label: 'all' }
     ]
 
-    useEffect(() => {
-        ///messing with this part 
+    useEffect(() => { 
         if (filterGenre.value) {
             console.log('if met')
             console.log(filterGenre.value)
@@ -38,7 +37,7 @@ function Landing() {
             }
 
             filterArray()
-        } //put the filter above here take out what in dep array 
+        }  
 
     }, [filterGenre])
 
@@ -88,7 +87,7 @@ function Landing() {
                    
                     //create a query
                     const q = query(listingsRef,
-                        orderBy('timestamp', 'desc'), limit(10)
+                        orderBy('timestamp', 'desc'), limit(12)
                     )
                     //Exicute query
                     const querySnapshot = await getDocs(q)

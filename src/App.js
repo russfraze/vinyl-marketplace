@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import PrivateRoute from './components/PrivateRoute'
 import Landing from './pages/Landing'
@@ -8,7 +8,7 @@ import SignIn from './pages/SignIn'
 import SignUp from './pages/SignUp'
 import CreateListing from './pages/CreateListing'
 import Listing from './pages/Listing'
-import {ToastContainer} from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import WantList from './pages/WantList'
 import Cart from './pages/Cart'
@@ -23,12 +23,14 @@ function App() {
           <Route path='/' element={<Landing />} />
           <Route path='/forgot-password' element={<ForgotPassword />} />
           <Route path='/profile' element={<PrivateRoute />}>
-            <Route path='/profile' element={<Profile />}/>
+            <Route path='/profile' element={<Profile />} />
           </Route>
           <Route path='/sign-in' element={<SignIn />} />
           <Route path='/sign-up' element={<SignUp />} />
           <Route path='/create-listing' element={<CreateListing />} />
-          <Route path='/landing/:itemId' element={<Listing />} />
+          <Route path='/landing/:itemId' element={<PrivateRoute />}>
+            <Route path='/landing/:itemId' element={<Listing />} />
+          </Route>
           <Route path='/want-list' element={<WantList />} />
           <Route path='/cart' element={<Cart />} />
           <Route path='/edit-listing/:itemId' element={<EditListing />} />

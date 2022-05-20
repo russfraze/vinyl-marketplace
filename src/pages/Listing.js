@@ -91,7 +91,6 @@ function Listing() {
 
     return (
         <main>
-
             <div className="singleListing">
                     <img className='singleListingImg' src={listing.imgUrls[0]}></img>
                 <div className="singleListingItems">
