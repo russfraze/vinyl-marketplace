@@ -25,8 +25,8 @@ function Navbar() {
                     <li className='navbarListItem' onClick={() => navigate('/')}>
                         <p className={pathMatchRoute('/') ? 'navbarActive' : ''}>Home</p>
                     </li>
-                    <li className='navbarListItem'>
-                        <p >Something</p>
+                    <li className='navbarListItem' onClick={() => navigate('/cart')}>
+                        <p >Cart</p>
                     </li>
                     <li className='navbarListItem' onClick={() => navigate('/profile')}>
                         <p className={pathMatchRoute('/profile') ? 'navbarActive' : ''}>Profile</p>

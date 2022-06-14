@@ -21,9 +21,9 @@ function Listing() {
         item: ''
     })
 
-    const [cart, setCart] = useState({
-        item: ''
-    })
+    // const [cart, setCart] = useState({
+    //     item: ''
+    // })
 
     const { name, userId } = userData
 
@@ -34,29 +34,26 @@ function Listing() {
     const addWant = async () => {
         const itemId = params.itemId
 
-        setWantlist((prevState) => ({
-            ...prevState,
-            item: itemId
-        }))
+        // setWantlist((prevState) => ({
+        //     ...prevState,
+        //     item: itemId
+        // }))
 
         await addDoc(collection(db, `users/${userId}/wantlist`), {
             item: itemId,
         });
 
-
-
         console.log(wantlist)
-
 
     }
 
     const addCart = async () => {
         const itemId = params.itemId
 
-        setCart((prevState) => ({
-            ...prevState,
-            item: itemId
-        }))
+        // setCart((prevState) => ({
+        //     ...prevState,
+        //     item: itemId
+        // }))
 
         await addDoc(collection(db, `users/${userId}/cart`), {
             item: itemId,
@@ -64,7 +61,7 @@ function Listing() {
 
 
 
-        console.log('log cart:',cart)
+        // console.log('log cart inside function:',cart)
 
 
     }
@@ -91,6 +88,7 @@ function Listing() {
 
     return (
         <main>
+            {/* {console.log( 'cart from render',cart)} */}
             <div className="singleListing">
                     <img className='singleListingImg' src={listing.imgUrls[0]}></img>
                 <div className="singleListingItems">

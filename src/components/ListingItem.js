@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 
-function ListingItem({ item, id, onEdit, onDelete }) {
+function ListingItem({ item, id, listingId, onEdit, onDelete, addCart }) {
 
     return (
         <li className='listingItem'>
@@ -25,6 +25,8 @@ function ListingItem({ item, id, onEdit, onDelete }) {
                 )}
 
                 {onEdit && <button className='primaryButton' onClick={() => onEdit(id)}>Edit</button>}
+
+                {addCart && <button className='primaryButton' onClick={() => addCart(listingId)}>Add to cart</button>}
             </div>
 
         </li >

@@ -1,14 +1,20 @@
 import { connectAuthEmulator, getAuth, onAuthStateChanged } from 'firebase/auth'
 import { useState, useEffect, useRef } from 'react'
-import { collection, getDocs, query, limit, getDoc, doc, deleteDoc } from 'firebase/firestore'
+import { collection, getDocs, query, addDoc, getDoc, doc, deleteDoc } from 'firebase/firestore'
 import { db } from '../firebase.config'
 import ListingItem from '../components/ListingItem'
 import {toast} from 'react-toastify'
+import { useParams } from 'react-router-dom'
 
 
 
 function WantList() {
     const [wantItems, setWantItems] = useState([])
+
+    //im not saving it in state here 
+    const [cart, setCart] = useState({
+        item: ''
+    })
     const [uid, setUid] = useState(null)
     const [loading, setLoading] = useState(false)
     const isMounted = useRef(true)
@@ -17,6 +23,7 @@ function WantList() {
     wantRef.current = wantItems
 
     const auth = getAuth()
+    const params = useParams()
 
     useEffect(() => {
         if (isMounted) {
@@ -53,7 +60,7 @@ function WantList() {
                 //exicute query
                 setLoading(true)
                 const querySnapshot = await getDocs(q)
-
+                console.log(querySnapshot)
                 const items = []
 
                 querySnapshot.forEach((item) => {
@@ -62,6 +69,7 @@ function WantList() {
                         item: item.data()
                     })
                 })
+             
 
                 console.log('after q snapshot', items)
               
@@ -82,7 +90,8 @@ function WantList() {
                             setWantItems((prevState) => [
                                 ...prevState,
                                 {
-                                    id: item.id, 
+                                    id: item.id,
+                                    listingId: item.item.item, 
                                     data: docSnap.data()
                                 }
                             ]
@@ -133,7 +142,22 @@ function WantList() {
 
 
 
+    const addCart = async (itemId) => {
+        
+        // console.log('want of 0:',wantItems[i].listingId)
+        console.log('duuuuuuhhhhhhrrerrrr')
+        console.log(itemId)
+        
+        // setCart((prevState) => ({
+        //     ...prevState,
+        //     item: itemId
+        // }))
 
+        await addDoc(collection(db, `users/${auth.currentUser.uid}/cart`), {
+            item: itemId,
+        });
+
+    }
 
 
 
@@ -147,7 +171,7 @@ function WantList() {
         <div>
             
              {console.log( 'wantItems from render',wantItems)}
-             {console.log( 'wantRef from render',wantRef.current)}
+             {/* {console.log( 'wantRef from render',wantRef.current)} */}
             
             
             {/* <h1>{ wantItems.length && JSON.stringify(wantItems)}</h1> */}
@@ -158,7 +182,9 @@ function WantList() {
                         item={item.data}
                         id={item.id}
                         key={item.id}
+                        listingId={item.listingId}
                         onDelete={() => onDelete(item.id) }
+                        addCart={() => addCart(item.listingId)}
                     />
                 ))}
             </ul>  

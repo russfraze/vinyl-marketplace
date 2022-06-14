@@ -1,7 +1,8 @@
 import { connectAuthEmulator, getAuth, onAuthStateChanged } from 'firebase/auth'
 import { useState, useEffect, useRef } from 'react'
-import { collection, getDocs, query, limit, getDoc, doc, deleteDoc } from 'firebase/firestore'
+import { collection, getDocs, query, addDoc, getDoc, doc, deleteDoc } from 'firebase/firestore'
 import { db } from '../firebase.config'
+import { useNavigate, useParams } from 'react-router-dom'
 import ListingItem from '../components/ListingItem'
 import {toast} from 'react-toastify'
 
@@ -18,6 +19,8 @@ function Cart() {
     useRef.current = cartItems
 
     const auth = getAuth()
+    const navigate = useNavigate()
+    const params = useParams()
 
     useEffect(() => {
         if (isMounted) {
@@ -50,7 +53,7 @@ function Cart() {
 
                 //create a query 
                 const q = query(listingsRef)
-                
+                console.log( 'new log',listingsRef)
                 //exicute query
                 setLoading(true)
                 const querySnapshot = await getDocs(q)
@@ -134,9 +137,6 @@ function Cart() {
 
 
 
-
-
-
     console.log( ' just gimme',cartItems.length)
     console.log( ' stringify',  JSON.stringify(cartItems))
 
@@ -159,7 +159,8 @@ function Cart() {
  
 
     return (
-        <div>
+        <div className='cart'>
+            <button className='specialButton' onClick={ () => navigate('/want-list')}>Wantlist</button>
             <ul>
                 {cartItems && cartItems.map((item) => (
                     <ListingItem

@@ -122,9 +122,10 @@ function Profile() {
                     }}>{changeDetails ? 'done' : 'change'}</p>
                     <button className='primaryButton' type="button" onClick={logOut}>Logout</button>
                 </div>
-                <Link to='/create-listing'>
-                    <button className='primaryButton'>Create Listing</button>
-                </Link>
+
+                
+                <button className='specialButton' onClick={ () => navigate('/create-listing')}>Create Listing</button>
+                
 
                 {listings?.length > 0 && (
                     <div>
