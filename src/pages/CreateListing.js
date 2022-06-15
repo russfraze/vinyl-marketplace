@@ -110,7 +110,7 @@ function CreateListing() {
 
                 uploadTask.on('state_changed',
                     (snapshot) => {
-                
+
                         const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                         console.log('Upload is ' + progress + '% done');
                         switch (snapshot.state) {
@@ -190,76 +190,94 @@ function CreateListing() {
 
 
     return (
-        <div>
+        <div className='createDiv'>
             <header>
-                Create Listing
+                <h3>Create Listing</h3>
             </header>
 
             <main>
                 <form onSubmit={onSubmit}>
 
-                    <label>Images</label>
-                    <input
-                        id='images'
-                        type='file'
-                        accept='.jpg,.png,.jpeg'
-                        onChange={onMutate}
-                        multiple
-                        required
-                    />
+                    <div className='imageSelect'>
+                        <label className='infoLabel'>Images</label>
+                        <input
+                            id='images'
+                            type='file'
+                            accept='.jpg,.png,.jpeg'
+                            onChange={onMutate}
+                            multiple
+                            required
+                        />
+                    </div>
 
-                    <label>Artist / Title</label>
-                    <input
-                        id='artistTitle'
-                        value={artistTitle}
-                        type='text'
-                        onChange={onMutate}
-                    />
+                    <div className='infoDiv'>
+                        <label className='infoLabel'>Artist / Title</label>
+                        <input
+                            id='artistTitle'
+                            value={artistTitle}
+                            type='text'
+                            onChange={onMutate}
+                        />
+                    </div>
 
-                    <label>Description</label>
-                    <input
-                        id='description'
-                        value={description}
-                        type='text'
-                        onChange={onMutate}
-                    />
+                    <div className='infoDiv'>
+                        <label className='infoLabel'>Description</label>
+                        <input
+                            id='description'
+                            value={description}
+                            type='text'
+                            onChange={onMutate}
+                        />
+                    </div>
 
                     <label>Condition</label>
                     <Select
+                        className='selectField'
                         options={grades}
                         id='condition'
                         value={condition}
                         onChange={setCondition}
                     />
+
+                    <label>Format</label>
                     <Select
+                        className='selectField'
                         options={formatOptions}
                         id='format'
                         value={format}
                         onChange={setFormat}
                     />
+
+                    <label>Genre/Style</label>
                     <Select
+                        className='selectField'
                         options={genreOptions}
                         id='genre'
                         value={genreStyle}
                         onChange={setGenreStyle}
                     />
 
-                    <label>Label</label>
+                    <div className='infoDiv'>
+                    <label className='infoLabel'>Label</label>
                     <input
                         id='label'
                         value={label}
                         type='text'
                         onChange={onMutate}
                     />
-                    <label>Price</label>
+                    </div>
+
+                    <div className='infoDiv'>
+                    <label className='infoLabel'>Price</label>
                     <input
                         id='price'
                         value={price}
                         type='text'
                         onChange={onMutate}
                     />
+                    </div>
 
-                    <button type='submit' >
+                    <button className='primaryButton' type='submit' >
                         Create Listing
                     </button>
 

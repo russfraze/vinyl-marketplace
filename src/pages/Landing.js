@@ -130,6 +130,7 @@ function Landing() {
                 onChange={setFilterGenre}
             />
 
+            <div className='createDiv'>
             <ul className='landingUl'>
                 {listings && listings.map((item) => (
                     <ListingItem
@@ -139,6 +140,7 @@ function Landing() {
                     />
                 ))}
             </ul>
+            </div>
         </div>
     )
 }
