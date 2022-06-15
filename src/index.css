@@ -191,7 +191,6 @@ button {
 .profileUl {
   display: flex;
   flex-direction: row;
-  width: 96vw;
   flex-wrap: wrap;
 
 }
