@@ -86,7 +86,8 @@ function Cart() {
                             setCartItems((prevState) => [
                                 ...prevState,
                                 {
-                                    id: item.id, 
+                                    id: item.id,
+                                    listingId: item.item.item, 
                                     data: docSnap.data()
                                 }
                             ]
@@ -165,7 +166,7 @@ function Cart() {
                 {cartItems && cartItems.map((item) => (
                     <ListingItem
                         item={item.data}
-                        id={item.id}
+                        id={item.listingId}
                         key={item.id}
                         onDelete={() => onDelete(item.id) }
                     />

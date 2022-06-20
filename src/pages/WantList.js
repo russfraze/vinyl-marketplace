@@ -180,7 +180,7 @@ function WantList() {
                 {wantItems && wantItems.map((item) => (
                     <ListingItem
                         item={item.data}
-                        id={item.id}
+                        id={item.listingId}
                         key={item.id}
                         listingId={item.listingId}
                         onDelete={() => onDelete(item.id) }
