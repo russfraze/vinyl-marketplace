@@ -4,6 +4,7 @@ import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 import outlineEyeOpen from '../assets/outline-eye-open.svg'
 
 function SignIn() {
+    const [showPassword, setShowPassword] = useState(false)
     const [userData, setUserData] = useState({
         email: '',
         password: ''
@@ -55,23 +56,28 @@ function SignIn() {
                     />
                     <div>
                         <input
-                            type='password'
+                            type={showPassword ? 'text' : 'password'}
                             placeholder='Password'
                             id='password'
                             value={password}
                             onChange={onChange}
                         />
 
-                        <img src={outlineEyeOpen} />
+                        <img src={outlineEyeOpen}
+                            onClick={() => setShowPassword((prevState) => !prevState)}
+                        />
                     </div>
-
+                    <br></br>
                     <button type="submit">
                         Submit
                     </button>
-
+                    <br></br>
+                    <br></br>
                     {/* google OAuth */}
 
                     <Link to='/forgot-password'>Forgot password</Link>
+                    <br></br>
+                    <br></br>
                     <Link to='/sign-up'>Sign up</Link>
                 </form>
 

@@ -6,6 +6,8 @@ import { db } from '../firebase.config'
 import outlineEyeOpen from '../assets/outline-eye-open.svg'
 
 function SignUp() {
+
+    const [showPassword, setShowPassword] = useState(false)
     const [userData, setUserData] = useState({
         name: '',
         email: '',
@@ -46,7 +48,7 @@ function SignUp() {
             // update the database, adding user to the users collection 
             await setDoc(doc(db, 'users', user.uid), userDataCopy)
 
-            
+
 
             //redirect
             navigate('/')
@@ -78,23 +80,28 @@ function SignUp() {
                     />
                     <div>
                         <input
-                            type='password'
+                            type={showPassword ? 'text' : 'password'}
                             placeholder='Password'
                             id='password'
                             value={password}
                             onChange={onChange}
                         />
 
-                        <img src={outlineEyeOpen} />
+                        <img src={outlineEyeOpen}
+                            onClick={() => setShowPassword((prevState) => !prevState)}
+                        />
                     </div>
-
+                    <br></br>
                     <button type="submit">
                         Submit
                     </button>
-
+                    <br></br>
+                    <br></br>
                     {/* google OAuth */}
 
                     <Link to='/forgot-password'>Forgot password</Link>
+                    <br></br>
+                    <br></br>
                     <Link to='/sign-in'>Sign in</Link>
                 </form>
             </div>
