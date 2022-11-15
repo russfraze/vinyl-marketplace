@@ -1,4 +1,4 @@
-# Dusty Discs (Vinyl Market App) 
+# Choice Vinyl (Vinyl Market App) 
 
 
 ## Tech  
