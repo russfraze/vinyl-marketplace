@@ -1,6 +1,10 @@
-# Choice Vinyl (Vinyl Market App) 
+# Choice Vinyl (Vinyl Market App)  
+
+### Browse records for sale by other users.  
 
 ![A screenshot of the app](https://github.com/russfraze/vinyl-marketplace/blob/main/Screen%20Shot%202022-12-06%20at%2012.00.07%20PM.png)
+
+### Search by genre.  
 
 ![A screenshot of the app](https://github.com/russfraze/vinyl-marketplace/blob/main/Screen%20Shot%202022-12-06%20at%2011.35.09%20AM.png)
 
