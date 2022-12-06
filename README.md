@@ -1,6 +1,6 @@
 # Choice Vinyl (Vinyl Market App) 
 
-
+![A screenshot of the app]()
 ## Tech  
 Google Firestore   
 React  
