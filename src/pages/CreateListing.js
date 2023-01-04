@@ -4,7 +4,6 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 import { db } from '../firebase.config'
 import { useNavigate } from 'react-router-dom'
-import React, { Component } from 'react'
 import Select from 'react-select'
 import { v4 as uuidv4 } from 'uuid'
 import { toast } from 'react-toastify'
@@ -90,10 +89,7 @@ function CreateListing() {
     const onSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
-        console.log(formData)
-        console.log(condition)
-        console.log(format)
-        console.log(genreStyle)
+        console.log(formData, condition, format, genreStyle)
 
         const storeImage = async (image) => {
             //return a new promise 

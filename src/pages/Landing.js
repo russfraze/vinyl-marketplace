@@ -1,5 +1,4 @@
-import { useEffect, useState, useRef } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 import { collection, getDocs, query, limit, where, orderBy } from 'firebase/firestore'
 import { db } from '../firebase.config'
 import { toast } from 'react-toastify'
@@ -16,7 +15,7 @@ function Landing() {
     const [filteredListings, setFilteredListings] = useState(listings)
     const [filterGenre, setFilterGenre] = useState([])
 
-
+    //search bar options 
     const genreOptions = [
         { value: 'Reggae', label: 'Reggae' },
         { value: 'Disco Edits', label: 'Disco Edits' },
@@ -27,26 +26,26 @@ function Landing() {
         { value: null, label: 'all' }
     ]
 
-    useEffect(() => { 
-        if (filterGenre.value) {
-            console.log('if met')
-            console.log(filterGenre.value)
-            const filterArray = () => {
-                const filteredListings = listings.filter(listing => listing.data.genreStyle.value == filterGenre.value)
-                setFilteredListings(filteredListings)
-            }
+    //filter the array of listings by search value
+    // useEffect(() => { 
+    //     if (filterGenre.value) {
+    //         console.log('if met')
+    //         console.log(filterGenre.value)
+    //         const filterArray = () => {
+    //             const filteredListings = listings.filter(listing => listing.data.genreStyle.value == filterGenre.value)
+    //             setFilteredListings(filteredListings)
+    //         }
 
-            filterArray()
-        }  
+    //         filterArray()
+    //     }  
 
-    }, [filterGenre])
+    // }, [filterGenre])
 
-
+    //get the listings from the database
     useEffect(() => {
         const fetchListings = async () => {
 
             if (filterGenre.value ) {
-                console.log('filterGenre has value')
                 console.log(filterGenre.value)
                 //get the filtered results
                 try {
@@ -60,10 +59,9 @@ function Landing() {
                     //Exicute query
                     const querySnapshot = await getDocs(q)
                     
-                    //create an empty array
-                    console.log(querySnapshot)
                     const listings = []
-    
+
+                    //loop over the items and store them in state
                     querySnapshot.forEach((doc) => {
                         return listings.push({
                             id: doc.id,
@@ -92,10 +90,9 @@ function Landing() {
                     //Exicute query
                     const querySnapshot = await getDocs(q)
                     
-                    //create an empty array
-                    console.log(querySnapshot)
                     const listings = []
-    
+                    
+                    //loop over the items and store them in state
                     querySnapshot.forEach((doc) => {
                         return listings.push({
                             id: doc.id,

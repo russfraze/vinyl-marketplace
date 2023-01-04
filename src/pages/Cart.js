@@ -1,6 +1,6 @@
-import { connectAuthEmulator, getAuth, onAuthStateChanged } from 'firebase/auth'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { useState, useEffect, useRef } from 'react'
-import { collection, getDocs, query, addDoc, getDoc, doc, deleteDoc } from 'firebase/firestore'
+import { collection, getDocs, query, getDoc, doc, deleteDoc } from 'firebase/firestore'
 import { db } from '../firebase.config'
 import { useNavigate, useParams } from 'react-router-dom'
 import ListingItem from '../components/ListingItem'
@@ -14,13 +14,8 @@ function Cart() {
     const [loading, setLoading] = useState(false)
     const isMounted = useRef(true)
 
-    const wantRef = useRef(null)
-    // is this used in my code? if not take out of wantlist page too 
-    useRef.current = cartItems
-
     const auth = getAuth()
     const navigate = useNavigate()
-    const params = useParams()
 
     useEffect(() => {
         if (isMounted) {
@@ -44,7 +39,7 @@ function Cart() {
     
     useEffect(() => {
         
-
+        //get record's listing id from users want list
         const fetchCart = async (uid) => {
            
             try {
@@ -53,10 +48,12 @@ function Cart() {
 
                 //create a query 
                 const q = query(listingsRef)
-                console.log( 'new log',listingsRef)
+                console.log( 'listingsRef',listingsRef)
+
                 //exicute query
                 setLoading(true)
                 const querySnapshot = await getDocs(q)
+                console.log( 'querySnapshot', querySnapshot)
 
                 const items = []
 
@@ -67,19 +64,16 @@ function Cart() {
                     })
                 })
 
-                console.log('after q snapshot', items)
+                console.log('items array', items)
               
-                const itemData = []
-
+                //loop through array and get the record's data from listing collection 
                 items.forEach((item) => {
 
-                    //save this in a variable and use that 
-                    console.log('extract the id', item.item.item)
+                    const recordListId = item.item.item
 
                     const getItemData = async () => {
-                        const docRef = doc(db, "listings", `${item.item.item}`);
+                        const docRef = doc(db, "listings", `${recordListId}`);
                         const docSnap = await getDoc(docRef);
-
 
                         if (docSnap.exists()) {
                           
@@ -87,7 +81,7 @@ function Cart() {
                                 ...prevState,
                                 {
                                     id: item.id,
-                                    listingId: item.item.item, 
+                                    listingId: recordListId, 
                                     data: docSnap.data()
                                 }
                             ]
@@ -102,14 +96,7 @@ function Cart() {
                     
                     getItemData()
                     
-                     
-                    
-                    
                 })
-                console.log('item data outside:', itemData)
-
-
-                console.log('the end',cartItems)
                
                 setLoading(false)
                 
@@ -118,6 +105,7 @@ function Cart() {
                 console.log(error)
             }
         }
+
         if (uid) {
 
             fetchCart(uid)
@@ -136,28 +124,17 @@ function Cart() {
         }
     }
 
-
-
-    console.log( ' just gimme',cartItems.length)
-    console.log( ' stringify',  JSON.stringify(cartItems))
-
     let sum = 0
     
     for (let i = 0; i < cartItems.length; i++) {
         sum += parseInt(cartItems[i].data.price)
     }
 
-    console.log(sum)
-
-
-
-
-
     if ( loading === true ){
         return <h1>Loading...</h1>
     }
    
- 
+
 
     return (
         <div className='cart'>

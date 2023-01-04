@@ -22,5 +22,3 @@ export const useAuthStatus = () => {
     return { loggedIn, checkingStatus }
 }
 
-
-//onAuthStateChanged 

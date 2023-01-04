@@ -1,4 +1,4 @@
-import { useNavigate, useLocation, Navigate, Link } from 'react-router-dom'
+import { useNavigate, useLocation } from 'react-router-dom'
 import { getAuth } from 'firebase/auth'
 import BLUE from '../assets/BLUE.png'
 

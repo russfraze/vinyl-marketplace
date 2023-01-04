@@ -1,8 +1,9 @@
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import { getDoc, setDoc, addDoc, getDocs, doc, arrayUnion, collection, query } from 'firebase/firestore'
+import { getDoc, addDoc, doc, collection } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
 import { db } from '../firebase.config'
+import {toast} from 'react-toastify'
 
 
 function Listing() {
@@ -11,7 +12,6 @@ function Listing() {
 
     const [listing, setListing] = useState(null)
     const [loading, setLoading] = useState(true)
-    // const [itemData, setItemData] = useState(null)
     const [userData, setUserData] = useState({
         name: auth.currentUser.displayName,
         userId: auth.currentUser.uid,
@@ -21,51 +21,37 @@ function Listing() {
         item: ''
     })
 
-    // const [cart, setCart] = useState({
-    //     item: ''
-    // })
-
     const { name, userId } = userData
 
     const navigate = useNavigate()
     const params = useParams()
 
-
+    //add this item to users wantlist 
     const addWant = async () => {
         const itemId = params.itemId
-
-        // setWantlist((prevState) => ({
-        //     ...prevState,
-        //     item: itemId
-        // }))
 
         await addDoc(collection(db, `users/${userId}/wantlist`), {
             item: itemId,
         });
 
         console.log(wantlist)
+        toast.success('Item added to wantlist.')
 
     }
 
+    //add this item to users cart
     const addCart = async () => {
         const itemId = params.itemId
-
-        // setCart((prevState) => ({
-        //     ...prevState,
-        //     item: itemId
-        // }))
 
         await addDoc(collection(db, `users/${userId}/cart`), {
             item: itemId,
         });
 
-
-
-        // console.log('log cart inside function:',cart)
-
+        toast.success('Item added to cart.')
 
     }
 
+    //get this listing from the listings collection
     useEffect(() => {
         const fetchListing = async () => {
             const docRef = doc(db, 'listings', params.itemId)
@@ -73,7 +59,6 @@ function Listing() {
 
             if (docSnap.exists()) {
                 console.log(docSnap.data())
-                // console.log(listing.artistTitle)
                 setListing(docSnap.data())
                 setLoading(false)
             }

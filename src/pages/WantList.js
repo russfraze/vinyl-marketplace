@@ -1,4 +1,4 @@
-import { connectAuthEmulator, getAuth, onAuthStateChanged } from 'firebase/auth'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { useState, useEffect, useRef } from 'react'
 import { collection, getDocs, query, addDoc, getDoc, doc, deleteDoc } from 'firebase/firestore'
 import { db } from '../firebase.config'
@@ -106,14 +106,7 @@ function WantList() {
                     
                     getItemData()
                     
-                     
-                    
-                    
                 })
-                console.log('item data outside:', itemData)
-
-
-                console.log('the end',wantItems)
                
                 setLoading(false)
                 
@@ -136,30 +129,21 @@ function WantList() {
             await deleteDoc(doc(db, `users/${auth.currentUser.uid}/wantlist`, itemId))
             const updatedWantlist = wantItems.filter((item) => item.id !== itemId)
             setWantItems(updatedWantlist)
-            toast.success("Want list item deleted")
+            toast.success("Wantlist item deleted")
         }
     }
 
-
-
     const addCart = async (itemId) => {
         
-        // console.log('want of 0:',wantItems[i].listingId)
-        console.log('duuuuuuhhhhhhrrerrrr')
         console.log(itemId)
         
-        // setCart((prevState) => ({
-        //     ...prevState,
-        //     item: itemId
-        // }))
-
         await addDoc(collection(db, `users/${auth.currentUser.uid}/cart`), {
             item: itemId,
         });
 
+        toast.success("Wantlist item added to cart")
+
     }
-
-
 
     if ( loading === true ){
         return <h1>Loading...</h1>
@@ -169,13 +153,8 @@ function WantList() {
 
     return (
         <div>
-            
              {console.log( 'wantItems from render',wantItems)}
-             {/* {console.log( 'wantRef from render',wantRef.current)} */}
             
-            
-            {/* <h1>{ wantItems.length && JSON.stringify(wantItems)}</h1> */}
-
             <ul>
                 {wantItems && wantItems.map((item) => (
                     <ListingItem
@@ -188,14 +167,6 @@ function WantList() {
                     />
                 ))}
             </ul>  
-
-            {/* <h1>{ wantItems.length && JSON.stringify(wantItems)}</h1> */}
-
-          
-            
-                
-
-
            
         </div>
     )
