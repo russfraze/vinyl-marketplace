@@ -1,6 +1,6 @@
 import { getAuth, updateProfile } from 'firebase/auth'
 import { useState, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { updateDoc, doc, collection, getDocs, query, where, orderBy, deleteDoc } from 'firebase/firestore'
 import { db } from '../firebase.config'
 import ListingItem from '../components/ListingItem'
@@ -10,15 +10,12 @@ function Profile() {
     const auth = getAuth()
 
     const [changeDetails, setChangeDetails] = useState(false)
-    // const [loading, setLoading] = useState(true)
     const [listings, setListings] = useState(null)
     const [userData, setUserData] = useState({
         name: auth.currentUser.displayName,
         email: auth.currentUser.email,
     })
     const { name, email } = userData
-
-
 
     const navigate = useNavigate()
 
@@ -47,7 +44,6 @@ function Profile() {
     }, [auth.currentUser.uid])
 
     const logOut = () => {
-        console.log('err')
         auth.signOut()
         navigate('/')
     }
@@ -69,7 +65,7 @@ function Profile() {
         } catch (error) {
 
         }
-        console.log(userData)
+
     }
 
     const onChange = (e) => {
@@ -92,7 +88,6 @@ function Profile() {
 
     return (
         <>
-            {/* {user ? <h1>{user.displayName}</h1> : 'Not logged in'} */}
 
             <div className='profileBody'>
             <h3>Personal Details</h3>

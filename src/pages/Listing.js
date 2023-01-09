@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import { getDoc, addDoc, doc, collection } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
@@ -17,13 +17,8 @@ function Listing() {
         userId: auth.currentUser.uid,
     })
 
-    const [wantlist, setWantlist] = useState({
-        item: ''
-    })
-
     const { name, userId } = userData
 
-    const navigate = useNavigate()
     const params = useParams()
 
     //add this item to users wantlist 
@@ -34,7 +29,6 @@ function Listing() {
             item: itemId,
         });
 
-        console.log(wantlist)
         toast.success('Item added to wantlist.')
 
     }
@@ -58,7 +52,6 @@ function Listing() {
             const docSnap = await getDoc(docRef)
 
             if (docSnap.exists()) {
-                console.log(docSnap.data())
                 setListing(docSnap.data())
                 setLoading(false)
             }
@@ -73,7 +66,6 @@ function Listing() {
 
     return (
         <main>
-            {/* {console.log( 'cart from render',cart)} */}
             <div className="singleListing">
                     <img className='singleListingImg' src={listing.imgUrls[0]}></img>
                 <div className="singleListingItems">

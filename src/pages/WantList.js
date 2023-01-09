@@ -60,7 +60,6 @@ function WantList() {
                 //exicute query
                 setLoading(true)
                 const querySnapshot = await getDocs(q)
-                console.log(querySnapshot)
                 const items = []
 
                 querySnapshot.forEach((item) => {
@@ -69,16 +68,10 @@ function WantList() {
                         item: item.data()
                     })
                 })
-             
-
-                console.log('after q snapshot', items)
               
                 const itemData = []
 
                 items.forEach((item) => {
-
-                    //save this in a variable and use that 
-                    console.log('extract the id', item.item.item)
 
                     const getItemData = async () => {
                         const docRef = doc(db, "listings", `${item.item.item}`);
@@ -135,8 +128,6 @@ function WantList() {
 
     const addCart = async (itemId) => {
         
-        console.log(itemId)
-        
         await addDoc(collection(db, `users/${auth.currentUser.uid}/cart`), {
             item: itemId,
         });
@@ -153,8 +144,7 @@ function WantList() {
 
     return (
         <div>
-             {console.log( 'wantItems from render',wantItems)}
-            
+             
             <ul>
                 {wantItems && wantItems.map((item) => (
                     <ListingItem

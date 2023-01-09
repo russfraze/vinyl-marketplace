@@ -3,7 +3,6 @@ import { collection, getDocs, query, limit, where, orderBy } from 'firebase/fire
 import { db } from '../firebase.config'
 import { toast } from 'react-toastify'
 import ListingItem from '../components/ListingItem'
-import React, { Component } from 'react'
 import Select from 'react-select'
 
 
@@ -12,7 +11,6 @@ function Landing() {
 
     const [loading, setLoading] = useState(true)
     const [listings, setListings] = useState(null)
-    const [filteredListings, setFilteredListings] = useState(listings)
     const [filterGenre, setFilterGenre] = useState([])
 
     //search bar options 
@@ -26,27 +24,12 @@ function Landing() {
         { value: null, label: 'all' }
     ]
 
-    //filter the array of listings by search value
-    // useEffect(() => { 
-    //     if (filterGenre.value) {
-    //         console.log('if met')
-    //         console.log(filterGenre.value)
-    //         const filterArray = () => {
-    //             const filteredListings = listings.filter(listing => listing.data.genreStyle.value == filterGenre.value)
-    //             setFilteredListings(filteredListings)
-    //         }
-
-    //         filterArray()
-    //     }  
-
-    // }, [filterGenre])
 
     //get the listings from the database
     useEffect(() => {
         const fetchListings = async () => {
 
             if (filterGenre.value ) {
-                console.log(filterGenre.value)
                 //get the filtered results
                 try {
                     //get a ref to the collection 
@@ -70,14 +53,12 @@ function Landing() {
                     })
     
                     setListings(listings)
-                    console.log(listings)
     
                 } catch (error) {
                     toast.error('can not show listings')
                 }
                 
             } else {
-                console.log('else: filterGenre is null')
                 //get the unfiltered list from database
                 try {
                     //get a ref to the collection 
@@ -101,7 +82,6 @@ function Landing() {
                     })
     
                     setListings(listings)
-                    console.log(listings)
     
                 } catch (error) {
                     toast.error('can not show listings')

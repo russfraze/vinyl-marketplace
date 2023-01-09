@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { doc, setDoc, addDoc, serverTimestamp, collection } from "firebase/firestore";
+import { doc, setDoc, serverTimestamp } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { db } from '../firebase.config'
 import outlineEyeOpen from '../assets/outline-eye-open.svg'
@@ -13,7 +13,7 @@ function SignUp() {
         email: '',
         password: '',
     })
-    // destructure these variables from the userData so they can be used
+    
     const { name, email, password } = userData
 
     const navigate = useNavigate()
@@ -21,7 +21,6 @@ function SignUp() {
     const onChange = (e) => {
         setUserData((prevState) => ({
             ...prevState,
-            ///here is the tricky part with two ids
             [e.target.id]: e.target.value
         }))
     }
@@ -97,7 +96,6 @@ function SignUp() {
                     </button>
                     <br></br>
                     <br></br>
-                    {/* google OAuth */}
 
                     <Link to='/forgot-password'>Forgot password</Link>
                     <br></br>

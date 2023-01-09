@@ -4,7 +4,6 @@ import { getStorage, ref, uploadBytesResumable, getDownloadURL } from "firebase/
 import { serverTimestamp, doc, updateDoc, getDoc } from 'firebase/firestore'
 import { db } from '../firebase.config'
 import { useNavigate, useParams } from 'react-router-dom'
-import React, { Component } from 'react'
 import Select from 'react-select'
 import { v4 as uuidv4 } from 'uuid'
 import { toast } from 'react-toastify'
@@ -51,10 +50,7 @@ function EditListing() {
 
     const {
         artistTitle,
-        // condition,
         description,
-        // format,
-        // genreStyle,
         images,
         label,
         price
@@ -111,7 +107,6 @@ function EditListing() {
         }
     }, [isMounted])
 
-    console.log(formData)
 
     if (loading) {
         return <h1>Loading ...</h1>
@@ -120,10 +115,6 @@ function EditListing() {
     const onSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
-        console.log(formData)
-        console.log(condition)
-        console.log(format)
-        console.log(genreStyle)
 
         const storeImage = async (image) => {
             //return a new promise 

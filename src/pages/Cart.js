@@ -2,7 +2,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { useState, useEffect, useRef } from 'react'
 import { collection, getDocs, query, getDoc, doc, deleteDoc } from 'firebase/firestore'
 import { db } from '../firebase.config'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate} from 'react-router-dom'
 import ListingItem from '../components/ListingItem'
 import {toast} from 'react-toastify'
 
@@ -26,7 +26,6 @@ function Cart() {
                     setUid(uid)
                 } else {
                     // User is signed out
-                    // ...
                 }
             });
         }
@@ -48,12 +47,10 @@ function Cart() {
 
                 //create a query 
                 const q = query(listingsRef)
-                console.log( 'listingsRef',listingsRef)
 
                 //exicute query
                 setLoading(true)
                 const querySnapshot = await getDocs(q)
-                console.log( 'querySnapshot', querySnapshot)
 
                 const items = []
 
@@ -63,8 +60,6 @@ function Cart() {
                         item: item.data()
                     })
                 })
-
-                console.log('items array', items)
               
                 //loop through array and get the record's data from listing collection 
                 items.forEach((item) => {

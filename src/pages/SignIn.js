@@ -9,8 +9,7 @@ function SignIn() {
         email: '',
         password: ''
     })
-    // destructure these variables from the userData so they can be used
-    //as values in the forms 
+   
     const { email, password } = userData
 
     const navigate = useNavigate()
@@ -18,7 +17,6 @@ function SignIn() {
     const onChange = (e) => {
         setUserData((prevState) => ({
             ...prevState,
-            ///here is the tricky part with two ids
             [e.target.id]: e.target.value
         }))
     }
@@ -73,7 +71,6 @@ function SignIn() {
                     </button>
                     <br></br>
                     <br></br>
-                    {/* google OAuth */}
 
                     <Link to='/forgot-password'>Forgot password</Link>
                     <br></br>

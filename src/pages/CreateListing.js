@@ -49,10 +49,7 @@ function CreateListing() {
 
     const {
         artistTitle,
-        // condition,
         description,
-        // format,
-        // genreStyle,
         images,
         label,
         price
@@ -80,8 +77,6 @@ function CreateListing() {
         }
     }, [isMounted])
 
-    console.log(formData)
-
     if (loading) {
         return <h1>Loading ...</h1>
     }
@@ -89,7 +84,6 @@ function CreateListing() {
     const onSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
-        console.log(formData, condition, format, genreStyle)
 
         const storeImage = async (image) => {
             //return a new promise 
@@ -150,7 +144,7 @@ function CreateListing() {
 
         delete listingData.images
 
-        //save tot he database
+        //save to the database
         const docRef = await addDoc(collection(db, 'listings'), listingData)
 
         setLoading(false)
